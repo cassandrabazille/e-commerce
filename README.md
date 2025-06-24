@@ -59,3 +59,68 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+# Installation du projet Laravel e-commerce en local
+
+## Prérequis
+
+- PHP >= 8.0  
+- Composer  
+- MySQL (via phpMyAdmin ou autre)  
+- Git  
+- Serveur local (ex : XAMPP, WAMP, MAMP)
+
+---
+
+## Étapes d'installation
+
+1. Créer le projet Laravel
+
+    ```bash
+    composer create-project laravel/laravel e-commerce
+    ```
+
+2. Créer la base de données
+
+    - Ouvre phpMyAdmin (ou ton outil de gestion MySQL)  
+    - Crée une base nommée `e-commerce` (ou autre, à adapter dans `.env`)
+
+3. Initialiser Git et faire le premier commit
+
+    ```bash
+    cd e-commerce
+    git init
+    git commit -m "Initial commit - création du projet Laravel e-commerce"
+    ```
+
+4. Créer et basculer sur une branche dédiée
+
+    ```bash
+    git branch US1
+    git checkout US1
+    ```
+
+5. Configurer le fichier `.env`
+
+    - Copier `.env.example` en `.env` si ce n’est pas déjà fait  
+    - Modifier dans `.env` :  
+
+        ```env
+        APP_NAME=AmaZom
+
+        DB_DATABASE=e-commerce
+        DB_USERNAME=ton_user_mysql
+        DB_PASSWORD=ton_password_mysql
+        ```
+
+6. Vérifier le fichier `.gitignore`
+
+    - S’assurer que `.env` et le dossier `vendor/` sont bien exclus du dépôt Git
+
+7. Lancer le serveur de développement
+
+    ```bash
+    php artisan serve
+    ```
