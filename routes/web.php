@@ -11,7 +11,7 @@ Route::get('login', [AuthController::class, 'login']);
 Route::post('login', [AuthController::class, 'doLogin'])->name('auth.login');
 Route::resource('produits', ProduitController::class);
 Route::resource('categorie', CategorieController::class);
-Route::get('/panier', [CartController::class, 'index'])->name('cart.index');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/panier/ajouter/{idProduit}', [CartController::class, 'add'])->name('cart.add');
 
 

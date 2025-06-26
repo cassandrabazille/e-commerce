@@ -14,33 +14,35 @@ class CartController extends Controller
         return view('cart.index', compact('cart'));
     }
 
-    public function add(string $idProduit, Request $request)
-    {
+public function add(string $idProduit, Request $request)
+{
+    // Si tu ne passes pas quantity dans le formulaire, mets une valeur par défaut
+    $quantity = $request->input('quantity', 1);
 
-        $request->validate([
-            'quantity' => 'required|integer|min:1'
-        ]);
-
-        $quantity = $request->input('quantity');
-        dd($quantity);
-        $produit = Produit::findOrFail($idProduit);
-
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$idProduit])) {
-            $cart[$idProduit]['quantity']++;
-        } else {
-            $cart[$idProduit] = [
-                'quantity' => 1,
-                'name' => $produit->name,
-                'price' => $produit->price
-            ];
-        }
-
-        session()->put('cart', $cart);
-
-        return redirect()->back()->with('success', 'Produit ' . $produit->name . ' bien ajouté');
+    // Validation facultative si tu as un champ quantity
+    if ($quantity < 1) {
+        return redirect()->back()->withErrors('La quantité doit être au moins 1');
     }
 
-  
+    $produit = Produit::findOrFail($idProduit);
+
+    $cart = session()->get('cart', []);
+
+    if (isset($cart[$idProduit])) {
+        $cart[$idProduit]['quantity'] += $quantity;
+    } else {
+        $cart[$idProduit] = [
+            'quantity' => $quantity,
+            'name' => $produit->name,
+            'price' => $produit->price,
+        ];
+    }
+
+    session()->put('cart', $cart);
+
+    return redirect()->back()->with('success', 'Produit ' . $produit->name . ' bien ajouté au panier.');
+}
+
+
+
 }

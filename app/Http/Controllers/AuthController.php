@@ -27,7 +27,7 @@ class AuthController extends Controller
             ])
         ) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            return redirect()->route('produits.index');
         }
         return redirect()->back()->withErrors('Le mot de passe ou l\'email ne correspond pas');
     }

@@ -29,8 +29,8 @@
     <!-- Navbar fixed-top -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            <i class="fas fa-hospital me-2"></i>Tache
+        <a class="navbar-brand"  href="{{ route('produits.index') }}">
+            <i class="fas fa-hospital me-2"></i>AmaZom
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -40,18 +40,13 @@
             @auth
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('') }}">
-                        <i class="fas fa-list me-1"></i> Nouvelle tache
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{ url('/ta') }}">
-                        <i class="fas fa-search me-1"></i> Gerér les taches
+                        <i class="fas fa-search me-1"></i> Gérer les produits
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/taches/list') }}">
-                        <i class="fas fa-plus-circle me-1"></i> categetorie
+                   <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/ta') }}">
+                        <i class="fas fa-search me-1"></i> Gérer les catégories
                     </a>
                 </li>
                 <!-- Lien vers le panier ajouté ici -->
@@ -100,13 +95,10 @@
             <aside class="col-md-3 col-lg-2 d-none d-md-block sidebar p-3 bg-light border">
                 <div class="list-group">
                     <a href="{{ url('/listePraticiens') }}" class="list-group-item list-group-item-action">
-                        <i class="fas fa-list me-2"></i> Liste des praticiens
+                        <i class="fas fa-list me-2"></i> Liste des catégories 
                     </a>
                     <a href="{{ url('/rechercherPraticien') }}" class="list-group-item list-group-item-action">
-                        <i class="fas fa-search me-2"></i> Recherche
-                    </a>
-                    <a href="{{ url('/ajouterSpecialite') }}" class="list-group-item list-group-item-action">
-                        <i class="fas fa-plus me-2"></i> Ajouter spécialité
+                        <i class="fas fa-search me-2"></i> Rechercher un produit
                     </a>
                 </div>
             </aside>
