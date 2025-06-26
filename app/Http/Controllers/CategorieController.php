@@ -71,20 +71,23 @@ class CategorieController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        $request->validate([
-            'titre' => 'required',
-        ]);
-        $categorie = Categorie::findOrFail($id);
+{
+    $request->validate([
+        'name' => 'required|string|max:255', // Correction: 'name' au lieu de 'titre'
+        'description' => 'required|string',
+    ]);
 
-        $categorie->update([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-        ]);
+    $categorie = Categorie::findOrFail($id);
 
-        return redirect()->route('categorie.index')
-            ->with('success', 'La catégorie a bien été modifiée.');
-    }
+    $categorie->update([
+        'name' => $request->input('name'),
+        'slug' => Str::slug($request->input('name')), // Ajout de la mise à jour du slug
+        'description' => $request->input('description'),
+    ]);
+
+    return redirect()->route('categorie.index')
+        ->with('success', 'La catégorie a bien été modifiée.');
+}
 
     /**
      * Remove the specified resource from storage.

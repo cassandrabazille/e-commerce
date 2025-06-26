@@ -11,21 +11,11 @@ class ProduitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        $categories = Categorie::all();
-        $selectedCategorie = null;
-        $produits = Produit::all();
-
-        if ($request->has('categories')) {
-            $selectedCategorie = Categorie::with('produits')->find($request->input('categories'));
-
-            if ($selectedCategorie) {
-                $produits = $selectedCategorie->produits;
-            }
-        }
-        return view('produit.liste', compact('produits', 'categories', 'selectedCategorie'));
-    }
+   public function index(Request $request)
+{
+    $produits = Produit::all(); // Récupère tous les produits
+    return view('produits.index', compact('produits'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -33,27 +23,29 @@ class ProduitController extends Controller
     public function create()
     {
         $categories = Categorie::all();
-        return view('produit.create', compact('categories'));
+        return view('produits.create', compact('categories'));
     }
 
 public function store(Request $request)
 {
-    // Validation des données
     $request->validate([
         'name' => 'required|string|max:255',
         'description' => 'required|string',
         'id_categorie' => 'required|exists:categories,id_categorie',
+        'price' => 'required|numeric|min:0',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
     ]);
 
-    // Création du produit
-    Produit::create([
-        'name' => $request->input('name'),
-        'description' => $request->input('description'),
-        'id_categorie' => $request->input('id_categorie'),
-        'done' => false,
-    ]);
+    $data = $request->only(['name', 'description', 'id_categorie', 'price']);
+    
+    if ($request->hasFile('image')) {
+        $data['image'] = $request->file('image')->store('produits', 'public');
+    }
 
-    return redirect()->route('produit.index')->with('success', 'Produit créé avec succès');
+    Produit::create($data);
+
+    return redirect()->route('produit.index')
+        ->with('success', 'Produit créé avec succès');
 }
 
     /**
@@ -62,7 +54,7 @@ public function store(Request $request)
     public function show(string $id)
     {
         $produit = Produit::with('categorie')->findOrFail($id);
-        return view('produit.show', compact('produit'));
+        return view('produits.show', compact('produit'));
     }
 
     /**
@@ -72,7 +64,7 @@ public function store(Request $request)
     {
         $produit = Produit::find($id);
         $categories = Categorie::all();
-        return view('produit.edit', compact('produit', 'categories'));
+        return view('produits.edit', compact('produit', 'categories'));
     }
 
     /**
